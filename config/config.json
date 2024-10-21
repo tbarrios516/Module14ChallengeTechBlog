@@ -1,19 +1,4 @@
 {
-  "development": {
-    "username": "tech_blog_db_j52n_user",
-    "password": "oNJCkiolXYu8JOOl8hy0OfhFBBFI0Z3O",
-    "database": "tech_blog_db_j52n",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "port": 5432
-  },
-  "test": {
-    "username": "tech_blog_db_j52n_user",
-    "password": "oNJCkiolXYu8JOOl8hy0OfhFBBFI0Z3O",
-    "database": "tech_blog_db_j52n_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  },
   "production": {
     "use_env_variable": "DATABASE_URL",
     "dialect": "postgres"
