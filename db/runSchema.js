@@ -5,7 +5,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL);
 
 async function runSchema() {
   try {
-    const schema = fs.readFileSync('schema.sql', 'utf-8');
+    const schemaPath = path.join(__dirname, 'schema.sql');
     await sequelize.query(schema);
     console.log('Schema executed successfully.');
   } catch (error) {
