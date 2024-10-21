@@ -1,13 +1,26 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
-const sequelize = require("./config/connection");
+const Sequelize = require("sequelize");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const path = require("path");
 const routes = require("./controllers");
 const helpers = require("./utils/helpers");
 const dotenv = require("dotenv");
 dotenv.config();
+
+const sequelize = process.env.DATABASE_URL
+  ? new Sequelize(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+      protocol: 'postgres',
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      }
+    })
+  : require("./config/connection");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
