@@ -1,3 +1,31 @@
 DROP DATABASE IF EXISTS tech_blog_db_j52n;
 
 CREATE DATABASE tech_blog_db_j52n;
+
+\c tech_blog_db_j52n;
+
+CREATE TABLE IF NOT EXISTS "user" (
+    "id" SERIAL PRIMARY KEY,
+    "username" VARCHAR(255) NOT NULL UNIQUE,
+    "password" VARCHAR(255) NOT NULL,
+    "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "post" (
+    "id" SERIAL PRIMARY KEY,
+    "title" VARCHAR(255) NOT NULL,
+    "content" TEXT NOT NULL,
+    "user_id" INTEGER REFERENCES "user"("id") ON DELETE CASCADE,
+    "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "comment" (
+    "id" SERIAL PRIMARY KEY,
+    "content" TEXT NOT NULL,
+    "post_id" INTEGER REFERENCES "post"("id") ON DELETE CASCADE,
+    "user_id" INTEGER REFERENCES "user"("id") ON DELETE CASCADE,
+    "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
