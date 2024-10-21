@@ -78,7 +78,7 @@ This application can be deployed on platforms like Render, Heroku, or Vercel. Fo
 1. Push your code to a GitHub or GitLab repository.
 2. Create a new web service on Render and connect it to your repository.
 3. Configure the environment variables for your database.
-4. Deployed application on Render:
+4. Deployed application on Render: https://module14challengetechblog.onrender.com
 
 ## Contributing
 
