@@ -1,11 +1,12 @@
 const fs = require('fs');
-const { Sequelize } = require('sequelize');
+const path = require('path');
+const sequelize = require('../config/connection');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
-
-async function runSchema() {
+const runSchema = async () => {
   try {
     const schemaPath = path.join(__dirname, 'schema.sql');
+    const schema = fs.readFileSync(schemaPath, { encoding: 'utf8' });
+
     await sequelize.query(schema);
     console.log('Schema executed successfully.');
   } catch (error) {
@@ -13,6 +14,6 @@ async function runSchema() {
   } finally {
     await sequelize.close();
   }
-}
+};
 
 runSchema();
