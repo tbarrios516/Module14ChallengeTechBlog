@@ -1,0 +1,23 @@
+
+<div class="post-list">
+  <article class="post">
+    <div class="post-header">
+      <a href="/api/posts/{{id}}">{{title}}</a>
+      <p>Posted by {{user.username}} on {{format_date createdAt}}</p>
+      </div>
+    <p>{{content}}</p>
+</div>
+
+{{> comment}}
+<div class="post-list">
+  {{#each comments}}
+    <div class="post">
+      <div class="post-header">
+        <p>Comment by {{user.username}} on {{format_date createdAt}}</p>
+        </div>
+      <p>{{content}}</p>
+    </div>
+  {{else}}
+    <p>No comments yet. Be the first!</p>
+  {{/each}}
+</div>

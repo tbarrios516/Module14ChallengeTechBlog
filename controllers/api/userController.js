@@ -1,0 +1,61 @@
+const router = require("express").Router();
+const { User } = require("../../dbtable");
+
+router.post("/signup", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.create({ username, password });
+    req.session.userId = user.id; 
+    req.session.logged_in = true; 
+    res.redirect("/login");
+  } catch (error) {
+    console.error("Signup error:", error);
+    res.status(400).json({ error: "Signup failed. Please try again." });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log("loging in", username);
+    const userData = await User.findOne({ where: { username } });
+
+    if (!userData) {
+      res.status(400).json({ message: "Incorrect username or password" });
+      return;
+    }
+
+    const validPassword = await userData.checkPassword(password);
+    console.log("valid password");
+
+    if (!validPassword) {
+      res.status(400).json({ message: "Incorrect username or password" });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.userId = userData.id;
+      req.session.logged_in = true;
+      console.log("logged in");
+      console.log(req.session.logged_in);
+      console.log(req.session.userId);
+
+      res.redirect("/dashboard");
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+
+router.get("/logout", (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.redirect("/");
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
+module.exports = router;
